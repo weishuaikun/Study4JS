@@ -32,6 +32,7 @@
 					
 				},
 				reveive : function() {
+					//在这里可以通过传入不同的上下文（window或this）使控制台输出不同的name属性值
 					this.handleMessage(this, "hello", function(context, message) {
 						console.log(this);
 						console.log(message + context.name);
