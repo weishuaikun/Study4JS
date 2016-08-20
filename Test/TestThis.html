@@ -18,8 +18,11 @@
 
 	<body>
 		<script>
-			//var name  = "wsk";
+			//window上下文中的name属性
+			var name  = "wsk";
+			
 			var deliveryBoy = {
+				//deliveryBoy上下文中的name属性
 				name : "John",
 				handleMessage : function(context, message, handler) {
 					//方法内嵌套的方法的上下文为window对象，因此当你需要访问指定上下文的属性的时候就需要传入指定的上下文了
