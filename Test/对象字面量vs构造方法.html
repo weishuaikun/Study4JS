@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>对象字面量vs构造方法</title>
+		<meta name="description" content="" />
+		<meta name="author" content="wsk" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+
+	<body>
+
+		<header>
+			<h1>对象字面量vs构造方法</h1>
+		</header>
+		<script>
+
+			//使用"对象字面量"创建对象tank1
+			var tank1 = {
+				//名字属性
+				name:"tank1",
+				//血量属性
+				blood:100,
+				//开火（射击）方法
+				fire:function(otherTank){
+					alert(this.name + "击中" + otherTank.name);
+					otherTank.onHit();
+				},
+				//中弹方法
+				onHit:function(){
+					this.blood = this.blood -1;
+					alert(this.name + "中弹\n剩余血量为:" + this.blood);
+				}
+			};
+			
+			//======================华丽丽的分割线======================
+			
+			//使用"构造方法"创建对象tank2
+			//定义坦克的构造方法
+			function Tank(){
+				//名字属性
+				this.name = "tank2";
+				//血量属性
+				this.blood = 100;
+				//开火（射击）方法
+				this.fire = function(otherTank){
+					alert(this.name + "击中" + otherTank.name);
+					otherTank.onHit();
+				}
+				//中弹方法
+				this.onHit = function(){
+					this.blood = this.blood -1;
+					alert(this.name + "中弹\n剩余血量为:" + this.blood);
+				}
+			}
+			//使用构造方法创建坦克对象
+			var tank2 = new Tank();
+			
+			//两只坦克互相伤害,hahahahahah,来吧，互相伤害
+			tank1.fire(tank2);
+			tank2.fire(tank1);
+			tank1.fire(tank2);
+			tank2.fire(tank1);
+			tank1.fire(tank2);
+			tank2.fire(tank1);
+			
+		</script>
+
+	</body>
+</html>

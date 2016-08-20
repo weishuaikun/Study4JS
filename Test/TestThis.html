@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>TestThis</title>
+		<meta name="description" content="" />
+		<meta name="author" content="wsk" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+
+	<body>
+		<script>
+			//var name  = "wsk";
+			var deliveryBoy = {
+				name : "John",
+				handleMessage : function(context, message, handler) {
+					//方法内嵌套的方法的上下文为window对象，因此当你需要访问指定上下文的属性的时候就需要传入指定的上下文了
+					//handler方法要求传入上下文对象，这样的话可以控制我们使用哪个上下文。
+					alert("handleMessage:" + this.name);
+					handler(context, message);
+					
+				},
+				reveive : function() {
+					this.handleMessage(this, "hello", function(context, message) {
+						console.log(this);
+						console.log(message + context.name);
+						alert(this.name);
+					});
+				}
+			}
+			deliveryBoy.reveive();
+		</script>
+
+	</body>
+</html>
