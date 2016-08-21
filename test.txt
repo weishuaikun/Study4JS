@@ -1,4 +1,4 @@
 hello vim!
 I'm wsk.
 nice to meet you!
-bye
+bye vim.
