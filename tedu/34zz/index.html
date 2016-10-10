@@ -262,6 +262,12 @@
 				if (random == 1) {
 					ufo[ufo.length] = new Ufo(0, 0, 58, 88, 1, u, 1);
 				}
+				
+				//添加shield对象。参数Shield(x, y, width, height, life, frames, baseFrameCount)
+				if(random == 2){
+					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
+				}
+				
 				//新添，关闭多重火力的开关
 				if (hero.power <= 0) {
 					hero.multipleFire = false;
@@ -511,6 +517,15 @@
 				this.x = Math.random() * (480 - this.width);
 				this.y = -this.height;
 				//this.move = function(){}
+			}
+			
+			/**
+			 *盾牌对象构造方法
+			 */
+			function Shield(x, y, width, height, life, frames, baseFrameCount){
+				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
+				this.x = Math.random() * (480 - this.width);
+				this.y = -this.height;
 			}
 
 			/**
