@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>飞机大战</title>
+	</head>
+
+	<body>
+		<div id="stage" style="margin: 0 auto; width: 480px; height: 650px; text-align: center; vertical-align: middle" >
+			<canvas id="canvas" style="border:0px solid red;" width="480" height="650">
+				不支持画板对象
+			</canvas>
+		</div>
+		<script>
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			var background = new Image();
+			background.src = "images/background.png";
+			var enemy = new Image();
+			enemy.src = "images/enemy1.png";
+			background.onload = function() {
+
+			}
+			//背景和敌机移动
+			var x1 = 0;
+			var y1 = 0;
+			var x = 200;
+			var y = 0;
+			setInterval(function() {
+				ctx.drawImage(background, x1, y1);
+				y1 = y1 + 1;
+				ctx.drawImage(enemy, x, y);
+				y = y + 3;
+			}, 10);
+		</script>
+	</body>
+</html>

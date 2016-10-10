@@ -1,0 +1,42 @@
+index-protect页面更改：
+
+添加盾牌实现：
+
+	1、创建盾牌图片对象 			line 103-106 
+	2、创建存储盾牌的数组对象 		line 133-134
+	3、创建下落盾牌对象 			line 278-282
+	4、盾牌移动 					line 315-320
+	5、在画布上添加盾牌 			line 346-351
+	6、盾牌构造方法  				line 580-587
+	7、检测盾牌是否与英雄机相撞 	line 6336-645
+	8、更新盾牌数量 				line 705-713
+
+
+英雄机变身实现：
+
+	1、定义英雄受保护状态 			line 79-90
+
+	2、hero添加属性  				line 494-49
+		a、是否有盾牌护身 
+		b、盾牌护身时间
+		c、左位置偏移量
+
+	3、更改hero方法shoot
+		（ Bullet(this.x + 45  => Bullet(this.x + this.offsetX ）
+
+	4、创建hero保护状态类HeroProtect 	line 527-541
+		（继承Hero类，重写move方法）
+
+	5、新增方法addProtectTime
+		（给hero增加盾牌保护时间） 		line 618-621
+
+	6、修改【检测盾牌是否与英雄机相撞】代码 line 638-643
+
+	7、修改deleteComponent方法 			line 716-720
+
+
+
+
+
+
+
