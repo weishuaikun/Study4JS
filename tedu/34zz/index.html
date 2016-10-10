@@ -75,6 +75,19 @@
 			h[4].src = "images/hero_blowup_n3.png";
 			h[5] = new Image();
 			h[5].src = "images/hero_blowup_n4.png";
+			//添加无敌状态图片
+			h[6] = new Image();
+			h[6].src = "images/hero1_protect1.png";
+			h[7] = new Image();
+			h[7].src = "images/hero1_protect2.png";
+			//添加无敌销毁状态图片
+			h[8] = new Image();
+			h[8].src = "images/hero_protect_disapper_n1.png";
+			h[9] = new Image();
+			h[9].src = "images/hero_protect_disapper_n2.png";
+			h[10] = new Image();
+			h[10].src = "images/hero_protect_disapper_n3.png";
+			
 
 			var b = [];
 			b[0] = new Image();
@@ -492,9 +505,9 @@
 						bullets[bullets.length] = new Bullet(this.x + 45, this.y, 9, 21, 1, b, 1);
 					}
 				}
-				this.move = function() {
-
-				}
+				// this.move = function() {
+// 
+				// }
 			}
 
 			function Bullet(x, y, width, height, life, frames, baseFrameCount, type) {
