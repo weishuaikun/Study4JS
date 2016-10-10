@@ -280,6 +280,13 @@
 						ufo[i].step();
 					}
 				}
+				
+				//shield飞行物移动
+				for (var i = 0; i < shields.length; i++) {
+					if (shields[i]) {
+						shields[i].step();
+					}
+				}
 			}
 
 			var paintLastTime = 0;
@@ -304,6 +311,14 @@
 						ufo[i].paint(ctx);
 					}
 				}
+				
+				//画shield飞行物
+				for (var i = 0; i < shields.length; i++) {
+					if (shields[i]) {
+						shields[i].paint(ctx);
+					}
+				}
+				
 				ctx.font = "20px 微软雅黑";
 				ctx.fillText("SCORE:" + score, 10, 20);
 				//ctx.fillText("LIFE:" + heroes, 400, 20);
@@ -432,7 +447,7 @@
 				this.score = score;
 				this.type = type;
 			}
-
+			//TODO 添加无敌状态
 			function Hero(x, y, width, height, life, frames, baseFrameCount) {
 				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
 				this.x = 480 / 2 - this.width / 2;
@@ -543,6 +558,16 @@
 						reload(5);
 					}
 				}
+				
+				//检测shield飞行物是否与英雄级相撞
+				for (var i = 0; i < shields.length; i++) {
+					if (shields[i].hit(hero)) {
+						shields[i].bang();
+						//TODO 英雄机开启无敌模式
+						alert("英雄级撞到了盾牌");
+					}
+				}
+				
 				for (var i = 0; i < enemies.length; i++) {
 					var enemy = enemies[i];
 					if (enemy.canDelete || enemy.down) {
@@ -598,6 +623,17 @@
 					}
 				}
 				ufo = ary;
+				
+				//删除shield飞行物
+				ary = [];
+				idx = 0;
+				for (var i = 0; i < shields.length; i++) {
+					if (!(shields[i].canDelete || shields[i].outOfBounds())) {
+						ary[idx] = shields[i];
+						idx++;
+					}
+				}
+				shields = ary;
 
 				if (hero.canDelete) {
 					heroes--;
