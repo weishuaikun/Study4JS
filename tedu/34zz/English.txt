@@ -34,7 +34,10 @@ state	状态
 完成这个修改可以修改父类构造方法的hit方法，也可以修改checkHit方法，知识修改checkHit方法的话需要修改的地方比较多
 重写父类对象的step方法，在step方法里调用checkState方法
 
-当事件发生时只需要去修改currentState和nextState的值，在checkState方法里会做不同的事
+当事件发生时只需要去修改currentState和nextState的值，在checkState方法里会做不同的事d
+
+
+创建英雄级的地方的构造方法需要改变，切换图片的代码需要完善以下
 
 
 

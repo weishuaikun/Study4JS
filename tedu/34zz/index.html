@@ -125,7 +125,7 @@
 			var hero = new Hero(0, 0, 99, 124, 1, h, 2,4,2,3);
 			var bullets = [];
 			var score = 0;
-			var heroes = 30;
+			var heroes = 3;
 			//新添数组，用于存储ufo对象
 			var ufo = [];
 
@@ -275,10 +275,14 @@
 					ufo[ufo.length] = new Ufo(0, 0, 58, 88, 1, u, 1);
 				}
 
-				//添加shield对象。参数Shield(x, y, width, height, life, frames, baseFrameCount)
-				if (random == 2) {
+				var random1 = parseInt(Math.random() * 10);
+				if (random1 == 2) {
 					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
 				}
+				//添加shield对象。参数Shield(x, y, width, height, life, frames, baseFrameCount)
+				// if (random == 2) {
+					// shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
+				// }
 
 				//新添，关闭多重火力的开关
 				if (hero.power <= 0) {
@@ -542,7 +546,7 @@
 						//进入无敌状态
 						if(this.nextState == this.STATE.super){
 							this.currentState = this.nextState;
-							this.superTime += 1000;
+							this.superTime += 10;
 							this.nextState = null;
 							//TODO 切换图片
 							//刚进入无敌状态
@@ -562,7 +566,7 @@
 							this.frameIndex++;
 							this.superStartOver++;
 							//如果动画播放完了才让无敌状态消失还是开始播放动画就让无敌状态消失可以在这里通过if语句设置
-							if(this.superStartOver == this.DestroySHFrameCount){
+							if(this.superStartOver == (this.DestroySHFrameCount+1)){
 							this.currentState = this.nextState;
 							this.superTime = 0;
 							this.nextState = null;
@@ -589,7 +593,7 @@
 					}else{
 						//说明飞机状态没有发生改变
 						//切换图片
-						
+						console.log(this.superTime);
 						//检查无敌时间是否已经到
 						if(this.superTime <= 0){
 							this.nextState = this.STATE.normal;
@@ -723,7 +727,7 @@
 			 */
 			function Shield(x, y, width, height, life, frames, baseFrameCount) {
 				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
-				this.x = Math.random() * (480 - this.width);
+				this.x = Math.random() * (140 - this.width);
 				this.y = -this.height;
 			}
 
