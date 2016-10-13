@@ -75,18 +75,6 @@
 			h[4].src = "images/hero_blowup_n3.png";
 			h[5] = new Image();
 			h[5].src = "images/hero_blowup_n4.png";
-			//添加无敌状态图片
-			h[6] = new Image();
-			h[6].src = "images/hero1_protect1.png";
-			h[7] = new Image();
-			h[7].src = "images/hero1_protect2.png";
-			//添加无敌销毁状态图片
-			h[8] = new Image();
-			h[8].src = "images/hero_protect_disapper_n1.png";
-			h[9] = new Image();
-			h[9].src = "images/hero_protect_disapper_n2.png";
-			h[10] = new Image();
-			h[10].src = "images/hero_protect_disapper_n3.png";
 
 			var b = [];
 			b[0] = new Image();
@@ -98,11 +86,6 @@
 			var u = [];
 			u[0] = new Image();
 			u[0].src = "images/ufo1.png";
-
-			//创建图片数组，存储shield图片资源
-			var s = [];
-			s[0] = new Image();
-			s[0].src = "images/shield.png";
 
 			//创建图片，存储heart图片资源
 			var heart = new Image();
@@ -122,15 +105,12 @@
 			pause.src = "images/game_pause_nor.png";
 
 			var enemies = [];
-			var hero = new Hero(0, 0, 99, 124, 1, h, 2,4,2,3);
+			var hero = new Hero(0, 0, 99, 124, 1, h, 2);
 			var bullets = [];
 			var score = 0;
 			var heroes = 3;
 			//新添数组，用于存储ufo对象
 			var ufo = [];
-
-			//新添数组，用于存储shield对象
-			var shields = [];
 
 			//新添数组，用于存储life对象
 			var life = [];
@@ -274,16 +254,6 @@
 				if (random == 1) {
 					ufo[ufo.length] = new Ufo(0, 0, 58, 88, 1, u, 1);
 				}
-
-				var random1 = parseInt(Math.random() * 10);
-				if (random1 == 2) {
-					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
-				}
-				//添加shield对象。参数Shield(x, y, width, height, life, frames, baseFrameCount)
-				// if (random == 2) {
-					// shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
-				// }
-
 				//新添，关闭多重火力的开关
 				if (hero.power <= 0) {
 					hero.multipleFire = false;
@@ -310,13 +280,6 @@
 						ufo[i].step();
 					}
 				}
-
-				//shield飞行物移动
-				for (var i = 0; i < shields.length; i++) {
-					if (shields[i]) {
-						shields[i].step();
-					}
-				}
 			}
 
 			var paintLastTime = 0;
@@ -341,14 +304,6 @@
 						ufo[i].paint(ctx);
 					}
 				}
-
-				//画shield飞行物
-				for (var i = 0; i < shields.length; i++) {
-					if (shields[i]) {
-						shields[i].paint(ctx);
-					}
-				}
-
 				ctx.font = "20px 微软雅黑";
 				ctx.fillText("SCORE:" + score, 10, 20);
 				//ctx.fillText("LIFE:" + heroes, 400, 20);
@@ -478,12 +433,11 @@
 				this.type = type;
 			}
 
-			//TODO 添加无敌状态
-			function Hero(x, y, width, height, life, frames, baseFrameCount, DestroyHeroFrameCount, SuperHeroFrameCount,DestroySHFrameCount) {
+			function Hero(x, y, width, height, life, frames, baseFrameCount) {
 				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
 				this.x = 480 / 2 - this.width / 2;
 				this.y = 650 - this.height - 30;
-				this.shootInterval = 100;
+				this.shootInterval = 300;
 				this.shootLastTime = 0;
 				//新添属性，代表多重火力是否开启
 				this.multipleFire = false;
@@ -508,179 +462,8 @@
 					} else {
 						bullets[bullets.length] = new Bullet(this.x + 45, this.y, 9, 21, 1, b, 1);
 					}
-					//无敌时间缩减
-					this.superTime--;
 				}
 				this.move = function() {
-				
-				}
-				
-				//记录不同图片的帧数
-				this.baseFrameCount = baseFrameCount;
-				this.DestroyHeroFrameCount = DestroyHeroFrameCount;
-				this.SuperHeroFrameCount = SuperHeroFrameCount;
-				this.DestroySHFrameCount = DestroySHFrameCount;
-				
-				//记录无敌状态结束开始播放动画
-				this.superStartOver = 0;
-				//记录死亡状态开始播放动画
-				this.dieStart = 0;
-				
-				//飞机无敌时间
-				this.superTime = 0;
-				//飞机状态对象
-				this.STATE = {
-					normal : "NORMAL",
-					super : "SUPER",
-					die : "DIE"
-				};
-				//当前状态
-				this.currentState = this.STATE.normal;
-				//下一个状态
-				this.nextState = null;
-				this.checkState = function() {
-					//TODO
-					//检测英雄机状态并根据当前所处状态设置currentState、nextState为null、superTime并设置背景图
-					if(this.nextState != null){
-						//飞机状态需要发生改变
-						//进入无敌状态
-						if(this.nextState == this.STATE.super){
-							this.currentState = this.nextState;
-							this.superTime += 10;
-							this.nextState = null;
-							//TODO 切换图片
-							//刚进入无敌状态
-							if(this.superTime == 10){
-							this.frameIndex = 0;
-							}
-							
-						}
-						//无敌状态结束
-						if(this.currentState == this.STATE.super && this.nextState == this.STATE.normal){
-							//切换图片
-							//判断是否无敌状态刚结束
-							if(this.superStartOver == 0){
-								this.frameIndex = 0;
-							}
-							this.img = this.frames[this.frameIndex%this.DestroySHFrameCount + 8];
-							this.frameIndex++;
-							this.superStartOver++;
-							//如果动画播放完了才让无敌状态消失还是开始播放动画就让无敌状态消失可以在这里通过if语句设置
-							if(this.superStartOver == (this.DestroySHFrameCount+1)){
-							this.currentState = this.nextState;
-							this.superTime = 0;
-							this.nextState = null;
-							this.superStartOver = 0;
-							}
-						}
-						//进入死亡状态
-						if(this.nextState == this.STATE.die){
-							//切换图片
-							if(this.dieStart == 0){
-								this.frameIndex = 0;
-							}
-							this.img = this.frames[this.frameIndex%this.DestroyHeroFrameCount + 2];
-							this.frameIndex++;
-							this.dieStart++;
-							//需在动画播放完毕之后才设置以下属性
-							if(this.dieStart == this.DestroyHeroFrameCount){
-							this.currentState = this.nextState;
-							this.canDelete = true;
-							this.nextState = null;
-							this.dieStart = 0;								
-							}
-						}
-					}else{
-						//说明飞机状态没有发生改变
-						//切换图片
-						console.log(this.superTime);
-						//检查无敌时间是否已经到
-						if(this.superTime <= 0){
-							this.nextState = this.STATE.normal;
-						}
-						
-						//飞机处于不同状态（正常、无敌、死亡）时设置其显示的图片
-						if(this.currentState == this.STATE.normal){
-							this.frameIndex++;
-							this.img = this.frames[this.frameIndex%this.baseFrameCount + 0];
-						}
-						if(this.currentState == this.STATE.super){
-							this.frameIndex++;
-							var a = this.frameIndex%this.SuperHeroFrameCount;
-							this.img = this.frames[a + 6];
-						}
-						
-					}
-					
-					
-					
-				}
-				//TODO
-				// //重写父类方法的hit方法
-				// this.hit = function(component) {
-				// var c = component;
-				// //根据当前所处状态及所碰撞的东西返回不同的值
-				// return c.x > this.x - c.width && c.x < this.x + this.width && c.y > this.y - c.height && c.y < this.y + this.height;
-				// }
-
-				//英雄机重写父类的bang方法
-				this.bang = function() {
-					this.life--;
-					if (this.life == 0) {
-						//this.down = true;
-						//将英雄机的状态修改为死亡,设置播放死亡动画在checkState方法里设置
-						this.nextState = this.STATE.die;
-						if (this.score) {
-							score = score + this.score;
-						}
-						//this.frameIndex = this.frameCount;
-					}
-				}
-				//重写父类方法的step方法
-				this.step = function() {
-					if (!isActionTime(this.lastTime, this.interval)) {
-						return;
-					}
-					this.lastTime = new Date().getTime();
-					//英雄机没死的话就移动
-					if (this.currentState != this.STATE.die) {
-						this.move();
-					}
-					this.checkState();
-					
-					// if (this.down) {
-					// if (this.frameIndex == this.frames.length) {
-					// this.canDelete = true;
-					// } else {
-					// this.img = this.frames[this.frameIndex];
-					// this.frameIndex++;
-					// }
-					// } else {
-					// this.move();
-					// this.img = this.frames[this.frameIndex % this.frameCount];
-					// this.frameIndex++;
-					// }
-
-					/*
-					if (this.down) {
-						//飞机死亡后播放坠毁动画
-						// if (this.frameIndex == this.frames.length) {
-						// this.canDelete = true;
-						// } else {
-						// this.img = this.frames[this.frameIndex];
-						// this.frameIndex++;
-						// }
-						if (this.currentState != this.STATE.die) {
-
-						}
-						this.checkState();
-					} else {
-						this.move();
-						// this.img = this.frames[this.frameIndex % this.frameCount];
-						// this.frameIndex++;
-						this.checkState();
-					}
-					*/
 
 				}
 			}
@@ -723,15 +506,6 @@
 			}
 
 			/**
-			 *盾牌对象构造方法
-			 */
-			function Shield(x, y, width, height, life, frames, baseFrameCount) {
-				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
-				this.x = Math.random() * (140 - this.width);
-				this.y = -this.height;
-			}
-
-			/**
 			 *新添生命值爱心构造方法
 			 */
 			function Life(x, y, img) {
@@ -769,17 +543,6 @@
 						reload(5);
 					}
 				}
-
-				//检测shield飞行物是否与英雄级相撞
-				for (var i = 0; i < shields.length; i++) {
-					if (shields[i].hit(hero)) {
-						shields[i].bang();
-						//TODO 英雄机开启无敌模式
-						//alert("英雄级撞到了盾牌");
-						hero.nextState = hero.STATE.super;
-					}
-				}
-
 				for (var i = 0; i < enemies.length; i++) {
 					var enemy = enemies[i];
 					if (enemy.canDelete || enemy.down) {
@@ -799,11 +562,8 @@
 						}
 					}
 					if (enemy.hit(hero)) {
-						//敌机与英雄级发生碰撞后敌机肯定会死，但如果英雄机出于无敌状态则英雄级不会死
 						enemy.bang();
-						if (hero.currentState != hero.STATE.super) {
-							hero.bang();
-						}
+						hero.bang();
 					}
 				}
 			}
@@ -839,23 +599,12 @@
 				}
 				ufo = ary;
 
-				//删除shield飞行物
-				ary = [];
-				idx = 0;
-				for (var i = 0; i < shields.length; i++) {
-					if (!(shields[i].canDelete || shields[i].outOfBounds())) {
-						ary[idx] = shields[i];
-						idx++;
-					}
-				}
-				shields = ary;
-
 				if (hero.canDelete) {
 					heroes--;
 					if (heroes == 0) {
 						state = GAME_OVER;
 					} else {
-						hero = new Hero(0, 0, 99, 124, 1, h, 2,4,2,3);
+						hero = new Hero(0, 0, 99, 124, 1, h, 2);
 					}
 				}
 			}
