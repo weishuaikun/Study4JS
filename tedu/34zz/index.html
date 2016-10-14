@@ -99,6 +99,11 @@
 			var u = [];
 			u[0] = new Image();
 			u[0].src = "images/ufo1.png";
+			
+			//创建图片数组，存储shield图片资源
+			var s = [];
+			s[0] = new Image();
+			s[0].src = "images/shield.png";
 
 			//创建图片，存储heart图片资源
 			var heart = new Image();
@@ -124,6 +129,9 @@
 			var heroes = 3;
 			//新添数组，用于存储ufo对象
 			var ufo = [];
+			
+			//新添数组，用于存储shield对象
+			var shields = [];
 
 			//新添数组，用于存储life对象
 			var life = [];
@@ -266,7 +274,15 @@
 				var random = parseInt(Math.random() * 100);
 				if (random == 1) {
 					ufo[ufo.length] = new Ufo(0, 0, 58, 88, 1, u, 1);
+				}else{
+					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
 				}
+				
+				//添加shield对象。参数Shield(x, y, width, height, life, frames, baseFrameCount)
+				if (random == 2) {
+					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
+				}
+				
 				//新添，关闭多重火力的开关
 				if (hero.power <= 0) {
 					hero.multipleFire = false;
@@ -491,9 +507,9 @@
 						bullets[bullets.length] = new Bullet(this.x + 45, this.y, 9, 21, 1, b, 1);
 					}
 				}
-				// this.move = function() {
-// 
-				// }
+				this.move = function() {
+
+				}
 			}
 
 			function Bullet(x, y, width, height, life, frames, baseFrameCount, type) {
@@ -532,6 +548,16 @@
 				this.y = -this.height;
 				//this.move = function(){}
 			}
+			
+			/**
+			 *盾牌对象构造方法
+			 */
+			function Shield(x, y, width, height, life, frames, baseFrameCount) {
+				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
+				this.x = Math.random() * (140 - this.width);
+				this.y = -this.height;
+			}
+
 
 			/**
 			 *新添生命值爱心构造方法
@@ -577,7 +603,7 @@
 					if (shields[i].hit(hero)) {
 						shields[i].bang();
 						//TODO 英雄机开启无敌模式
-						alert("英雄级撞到了盾牌");
+						//alert("英雄级撞到了盾牌");
 					}
 				}
 				
