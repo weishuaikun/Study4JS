@@ -75,12 +75,35 @@
 			h[4].src = "images/hero_blowup_n3.png";
 			h[5] = new Image();
 			h[5].src = "images/hero_blowup_n4.png";
-
-			var copyright = new Image();
-			copyright.src = "images/shoot_copyright.png";
-
-			var pause = new Image();
-			pause.src = "images/game_pause_nor.png";
+			// //添加无敌状态图片
+			// h[6] = new Image();
+			// h[6].src = "images/hero1_protect1.png";
+			// h[7] = new Image();
+			// h[7].src = "images/hero1_protect2.png";
+			// //添加无敌销毁状态图片
+			// h[8] = new Image();
+			// h[8].src = "images/hero_protect_disapper_n1.png";
+			// h[9] = new Image();
+			// h[9].src = "images/hero_protect_disapper_n2.png";
+			// h[10] = new Image();
+			// h[10].src = "images/hero_protect_disapper_n3.png";
+			
+			//英雄机单位无敌时间
+			var SUPER_TIME_UNIT = 200;
+			
+			//英雄机无敌状态的图片
+			var sH = [];
+			sH[0] = new Image();
+			sH[0].src = "images/hero1_protect1.png";
+			sH[1] = new Image();
+			sH[1].src = "images/hero1_protect2.png";
+			//无敌销毁状态图片
+			sH[2] = new Image();
+			sH[2].src = "images/hero_protect_disapper_n1.png";
+			sH[3] = new Image();
+			sH[3].src = "images/hero_protect_disapper_n2.png";
+			sH[4] = new Image();
+			sH[4].src = "images/hero_protect_disapper_n3.png";
 
 			var b = [];
 			b[0] = new Image();
@@ -88,79 +111,85 @@
 			b[1] = new Image();
 			b[1].src = "images/bullet2.png";
 
+			//创建图片对象，存储ufo图片资源
 			var u = [];
 			u[0] = new Image();
 			u[0].src = "images/ufo1.png";
+			
+			//创建图片数组，存储shield图片资源
+			var s = [];
+			s[0] = new Image();
+			s[0].src = "images/shield.png";
 
-			var ufo = [];
+			//创建图片，存储heart图片资源
+			var heart = new Image();
+			heart.src = "images/heart.png";
+
+			//创建图片，存储blood图片资源
+			var blood = [];
+			for (var i = 0; i < 20; i++) {
+				blood[i] = new Image();
+				blood[i].src = "images/blood" + (i + 1) + ".png";
+			}
+
+			var copyright = new Image();
+			copyright.src = "images/shoot_copyright.png";
+
+			var pause = new Image();
+			pause.src = "images/game_pause_nor.png";
+
 			var enemies = [];
 			var hero = new Hero(0, 0, 99, 124, 1, h, 2);
 			var bullets = [];
 			var score = 0;
 			var heroes = 3;
+			//新添数组，用于存储ufo对象
+			var ufo = [];
+			
+			//新添数组，用于存储shield对象
+			var shields = [];
+
+			//新添数组，用于存储life对象
+			var life = [];
+
+			//新添数组，用于存储hp对象
+			var hp = [];
 
 			var START = 1;
+
 			var RUNNING = 2;
+
 			var PAUSE = 3;
+
 			var GAME_OVER = 4;
+
 			var state = START;
 
-			setInterval(function() {
-				controlState(ctx);
-			}, 10);
-
-			function controlState(ctx) {
-				switch(state) {
-					case START:
-						sky.paint(ctx);
-						sky.step();
-						var x = 20;
-						var y = 130;
-						ctx.drawImage(copyright, x, y);
-						break;
-					case RUNNING:
-						paintComponent(ctx);
-						sky.step();
-						componentStep();
-						componentEnter();
-						hero.shoot();
-						checkHit();
-						deleteComponent();
-						break;
-					case PAUSE:
-						paintComponent(ctx);
-						sky.step();
-						ctx.drawImage(pause, 0, 0);
-						break;
-					case GAME_OVER:
-						paintComponent(ctx);
-						sky.step();
-						var x = 480 / 2 - 245 / 2;
-						var y = 852 * (1 - 0.6);
-						ctx.font = "40px 微软雅黑";
-						ctx.fillText("GAME OVER", x, y);
-						break;
-				}
-			}
-
-
 			canvas.onclick = function() {
+
 				if (state == START) {
 					state = RUNNING;
 				}
 			}
 
 			canvas.onmouseout = function() {
+
 				if (state == RUNNING) {
 					state = PAUSE;
 				}
 			}
 
 			canvas.onmouseover = function() {
+
 				if (state == PAUSE) {
 					state = RUNNING;
 				}
 			}
+			setInterval(function() {
+
+				controlState(ctx);
+			}, 10);
+
 			function isActionTime(lastTime, interval) {
 				if (lastTime == 0) {
 					return true;
@@ -171,6 +200,67 @@
 
 			var lastTime = 0;
 			var interval = 400;
+
+			function controlState(ctx) {
+
+				switch(state) {
+
+					case START:
+
+						sky.paint(ctx);
+
+						sky.step();
+
+						var x = 20;
+						var y = 130;
+
+						ctx.drawImage(copyright, x, y);
+
+						break;
+
+					case RUNNING:
+
+						paintComponent(ctx);
+
+						componentStep();
+
+						componentEnter();
+
+						hero.shoot();
+
+						checkHit();
+
+						deleteComponent();
+
+						break;
+
+					case PAUSE:
+
+						paintComponent(ctx);
+
+						sky.step();
+
+						ctx.drawImage(pause, 0, 0);
+
+						break;
+
+					case GAME_OVER:
+
+						paintComponent(ctx)
+
+						sky.step();
+
+						var x = 480 / 2 - 245 / 2;
+						var y = 852 * (1 - 0.6);
+
+						ctx.font = "40px 微软雅黑";
+
+						ctx.fillText("GAME OVER", x, y);
+
+						break;
+				}
+			}
+
 			function componentEnter() {
 				if (! isActionTime(lastTime, interval)) {
 					return;
@@ -196,13 +286,31 @@
 							enemies.splice(0, 0, new Enemy(0, -258, 169, 258, 3, 20, 20, e3, 2));
 						}
 				}
-				var random = parseInt(Math.random() * 15);
+				//新添创建ufo对象。参数(x, y, width, height, life, frames, baseFrameCount)
+				var random = parseInt(Math.random() * 100);
 				if (random == 1) {
 					ufo[ufo.length] = new Ufo(0, 0, 58, 88, 1, u, 1);
+					
+					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
 				}
+				// else{
+					// shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
+				// }
+				
+				//添加shield对象。参数Shield(x, y, width, height, life, frames, baseFrameCount)
+				if (random == 2) {
+					shields[shields.length] = new Shield(0, 0, 59, 108, 1, s, 1);
+				}
+				
+				//新添，关闭多重火力的开关
 				if (hero.power <= 0) {
 					hero.multipleFire = false;
 				}
+			}
+
+			//新添创建生命值对象。参数(x,y,img)
+			for (var i = 0; i < heroes; i++) {
+				life[i] = new Life(i * 25 + 400, 3, heart);
 			}
 
 			function componentStep() {
@@ -214,14 +322,28 @@
 					bullets[i].step();
 				}
 				hero.step();
+				//6.新添ufo飞行物移动
 				for (var i = 0; i < ufo.length; i++) {
 					if (ufo[i]) {
 						ufo[i].step();
 					}
 				}
+				
+				//shield飞行物移动
+				for (var i = 0; i < shields.length; i++) {
+					if (shields[i]) {
+						shields[i].step();
+					}
+				}
 			}
 
+			var paintLastTime = 0;
+			var paintInterval = 40;
 			function paintComponent(ctx) {
+				if (! isActionTime(paintLastTime, paintInterval)) {
+					return;
+				}
+				paintLastTime = new Date().getTime();
 				sky.paint(ctx);
 				for (var i = 0; i < enemies.length; i++) {
 					enemies[i].paint(ctx);
@@ -230,14 +352,43 @@
 					bullets[i].paint(ctx);
 				}
 				hero.paint(ctx);
+
+				//新添画ufo飞行物
 				for (var i = 0; i < ufo.length; i++) {
 					if (ufo[i]) {
 						ufo[i].paint(ctx);
 					}
 				}
+				
+				//画shield飞行物
+				for (var i = 0; i < shields.length; i++) {
+					if (shields[i]) {
+						shields[i].paint(ctx);
+					}
+				}
+				
 				ctx.font = "20px 微软雅黑";
 				ctx.fillText("SCORE:" + score, 10, 20);
-				ctx.fillText("LIFE:" + heroes, 400, 20);
+				//ctx.fillText("LIFE:" + heroes, 400, 20);
+				//画生命值
+				ctx.fillText("LIFE:", 350, 20);
+				for (var i = 0; i < heroes; i++) {
+					ctx.drawImage(life[i].img, life[i].x, life[i].y);
+				}
+
+				//新添画血条对象。参数(x,y,img)
+				if (enemies[0] != undefined && enemies[0].type == 3) {
+					if(enemies[0].life > 0){
+					hp[0] = new Blood(enemies[0].x + 63, enemies[0].y + 250, blood[enemies[0].life-1]);
+					}else{
+					hp[0] = new Blood(enemies[0].x + 63, enemies[0].y + 250, blood[enemies[0].life]);
+					}
+					hp[0].paint(ctx);
+				}
+				// if (enemies[0].type == 3) {
+					// hp[0] = new Blood(enemies[0].x + 63, enemies[0].y + 250, blood[enemies[0].life]);
+					// hp[0].paint(ctx);
+				// }
 			}
 
 			function Sky() {
@@ -285,6 +436,7 @@
 					hero.x = mpoint.x - hero.width / 2;
 					hero.y = mpoint.y - hero.height / 2;
 				}
+
 			}
 			function FlyingObject(x, y, width, height, life, frames, baseFrameCount) {
 				this.x = x;
@@ -292,24 +444,24 @@
 				this.width = width;
 				this.height = height;
 				this.life = life;
+				this.frames = frames;
+				this.img = frames[0];
+				this.frameIndex = 0;
+				this.frameCount = baseFrameCount;
 				this.interval = 10;
 				this.lastTime = 0;
 				this.down = false;
 				this.canDelete = false;
-				this.frames = frames;
-				this.img = this.frames[0];
-				this.frameIndex = 0;
-				this.frameCount = baseFrameCount;
 				this.paint = function(ctx) {
 					ctx.drawImage(this.img, this.x, this.y);
 				}
 				this.step = function() {
-					if (! isActionTime(this.lastTime, this.interval)) {
+					if (!isActionTime(this.lastTime, this.interval)) {
 						return;
 					}
 					this.lastTime = new Date().getTime();
 					if (this.down) {
-						if (this.frameIndex == frames.length) {
+						if (this.frameIndex == this.frames.length) {
 							this.canDelete = true;
 						} else {
 							this.img = this.frames[this.frameIndex];
@@ -320,6 +472,7 @@
 						this.img = this.frames[this.frameIndex % this.frameCount];
 						this.frameIndex++;
 					}
+
 				}
 				this.move = function() {
 					this.y++;
@@ -350,54 +503,163 @@
 				this.score = score;
 				this.type = type;
 			}
-
+			//TODO 添加无敌状态
 			function Hero(x, y, width, height, life, frames, baseFrameCount) {
 				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
 				this.x = 480 / 2 - this.width / 2;
 				this.y = 650 - this.height - 30;
 				this.shootInterval = 300;
 				this.shootLastTime = 0;
+				//新添属性，代表多重火力是否开启
 				this.multipleFire = false;
+				//新添属性，代表开启多重火力的能量
 				this.power = 0;
 				this.shoot = function() {
 					if (!isActionTime(this.shootLastTime, this.shootInterval)) {
 						return;
 					}
 					this.shootLastTime = new Date().getTime();
+					//原来的代码
+					//bullets[bullets.length] = new Bullet(this.x + 45, this.y, 9, 21, 1, b, 2);
+					//新添的多重火力
+					//将45修改为图片的宽度，因为无敌状态的飞机和普通状态的飞机宽度不一样
 					if (this.multipleFire) {
-						bullets[bullets.length] = new Bullet(this.x + 45, this.y + 1, 9, 21, 1, b, 1, 1);
-						bullets[bullets.length] = new Bullet(this.x + 45, this.y + 1, 9, 21, 1, b, 1, 2);
-						bullets[bullets.length] = new Bullet(this.x + 45, this.y + 1, 9, 21, 1, b, 1, 3);
-						bullets[bullets.length] = new Bullet(this.x + 45, this.y + 1, 9, 21, 1, b, 1, 4);
-						bullets[bullets.length] = new Bullet(this.x + 45, this.y + 1, 9, 21, 1, b, 1, 5);
+						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 1);
+						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 2);
+						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 3);
+						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 4);
+						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 5);
+						//新添，能量衰减
 						this.power--;
 					} else {
-						bullets[bullets.length] = new Bullet(this.x + 45, this.y, 9, 21, 1, b, 1);
+						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y, 9, 21, 1, b, 1);
 					}
 				}
 				this.move = function() {
 
 				}
+				
+				//TODO 当前状态对象,默认设置为正常状态
+				this.heroState = new NormalState(this,h,2,99,124);
+				//设置英雄机的状态
+				this.setState = function(newState){
+					this.heroState = newState;
+				}
+				//重写step方法
+				this.step = function(){
+					this.heroState.step();
+				}
+				//重写bang方法
+				this.bang = function() {
+					this.heroState.bang();
+				}
 			}
+			
+			//TODO	hero 正常状态 
+			function NormalState(hero,img,baseFrameCount,width,height){
+				//添加this.hero 属性
+				hero.frames = img;
+				//设置以下英雄机的hero.frameIndex 和 hero.frameCount属性
+				hero.frameIndex = 0;
+				hero.frameCount = baseFrameCount;
+				hero.width = width;
+				hero.height = height;
+				
+				this.step = function(){
+					if (!isActionTime(hero.lastTime, hero.interval)) {
+						return;
+					}
+					hero.lastTime = new Date().getTime();
+					if (hero.down) {
+						if (hero.frameIndex == hero.frames.length) {
+							hero.canDelete = true;
+						} else {
+							hero.img = hero.frames[hero.frameIndex];
+							hero.frameIndex++;
+						}
+					} else {
+						hero.move();
+						hero.img = hero.frames[hero.frameIndex % hero.frameCount];
+						hero.frameIndex++;
+					}
+				}
+				this.bang = function(){
+					hero.life--;
+					if (hero.life == 0) {
+						hero.down = true;
+						hero.frameIndex = hero.frameCount;
+					}
+				}
+			}
+			//TODO 	hero 无敌状态
+			function SuperState(hero,superTime,img,baseFrameCount,width,height){
+				//无敌时间
+				this.timeLeft = superTime;
+				hero.frames = img;
+				//设置以下英雄机的hero.frameIndex 和 hero.frameCount属性
+				hero.frameIndex = 0;
+				hero.frameCount = baseFrameCount;
+				hero.width = width;
+				hero.height = height;
+				
+				this.setTimeLeft = function(time){
+					this.timeLeft += time;
+				}
+				
+				this.step = function(){
+					if (!isActionTime(hero.lastTime, hero.interval)) {
+						return;
+					}
+					hero.lastTime = new Date().getTime();
+					//是否开始播放无敌状态消失动画
+					if (this.timeLeft == 0) {
+						if (hero.frameIndex == hero.frames.length) {
+							//hero.canDelete = true;
+							//进入正常状态
+							hero.setState(new NormalState(hero,h,2,99,124));
+							
+						} else {
+							hero.img = hero.frames[hero.frameIndex];
+							hero.frameIndex++;
+						}
+					} else {
+						hero.move();
+						hero.img = hero.frames[hero.frameIndex % hero.frameCount];
+						hero.frameIndex++;
+						//每移动一步无敌时间减一
+						this.timeLeft--;
+						if(this.timeLeft == 0){
+							hero.frameIndex = hero.frameCount;
+						}
+					}
+				}
+				//因为无敌状态时英雄机不会死，所以bang方法为空
+				this.bang = function(){
+					
+				}
+			}
+			//TODO 	hero 要不要有死亡状态：答案为不需要有死亡状态，因为只有正常状态才会死亡
 
 			function Bullet(x, y, width, height, life, frames, baseFrameCount, type) {
 				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
 				this.move = function() {
 					this.y -= 2;
+					//新添子弹轨迹
 					switch(type) {
-						case 1:
+						case 1 :
 							this.x -= 1;
 							break;
-						case 2:
+						case 2 :
 							this.x -= 0.45;
 							break;
-						case 3:
+						case 3 :
 							break;
-						case 4:
+						case 4 :
 							this.x += 0.45;
 							break;
-						case 5:
+						case 5 :
 							this.x += 1;
+							break;
 					}
 				}
 				this.outOfBounds = function() {
@@ -405,12 +667,49 @@
 				}
 			}
 
+			/**
+			 *新添奖励飞行物构造方法
+			 */
 			function Ufo(x, y, width, height, life, frames, baseFrameCount) {
 				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
 				this.x = Math.random() * (480 - this.width);
 				this.y = -this.height;
+				//this.move = function(){}
+			}
+			
+			/**
+			 *盾牌对象构造方法
+			 */
+			function Shield(x, y, width, height, life, frames, baseFrameCount) {
+				FlyingObject.call(this, x, y, width, height, life, frames, baseFrameCount);
+				//this.x = Math.random() * (140 - this.width);
+				this.x = Math.random() * (480 - this.width);
+				this.y = -this.height;
 			}
 
+
+			/**
+			 *新添生命值爱心构造方法
+			 */
+			function Life(x, y, img) {
+				this.x = x;
+				this.y = y;
+				this.img = img;
+			}
+
+			/**
+			 *新添血条构造方法
+			 */
+			function Blood(x, y, img) {
+				this.x = x;
+				this.y = y;
+				this.img = img;
+				this.paint = function(ctx) {
+					ctx.drawImage(this.img, this.x, this.y);
+				}
+			}
+
+			//新添方法，为多重火力进行装弹（充能）
 			function reload(number) {
 				hero.power += number;
 				if (hero.power > 0) {
@@ -419,6 +718,32 @@
 			}
 
 			function checkHit() {
+				//新添检测ufo飞行物是否与英雄机相撞
+				for (var i = 0; i < ufo.length; i++) {
+					if (ufo[i].hit(hero)) {
+						ufo[i].bang();
+						//新添，开启多重火力
+						reload(5);
+					}
+				}
+				
+				//检测shield飞行物是否与英雄级相撞
+				for (var i = 0; i < shields.length; i++) {
+					if (shields[i].hit(hero)) {
+						shields[i].bang();
+						// 英雄机开启无敌模式
+						//alert("英雄级撞到了盾牌");
+						if(hero.heroState instanceof NormalState){
+							//当前英雄机处于正常状态
+							hero.setState(new SuperState(hero,SUPER_TIME_UNIT,sH,2,204,174));
+						}else{
+							// 当前处于无敌状态，只需要延长无敌时间就可以了
+							//alert("已经处于无敌状态了");
+							hero.heroState.setTimeLeft(SUPER_TIME_UNIT);
+						}
+					}
+				}
+				
 				for (var i = 0; i < enemies.length; i++) {
 					var enemy = enemies[i];
 					if (enemy.canDelete || enemy.down) {
@@ -426,23 +751,20 @@
 					}
 					for (var j = 0; j < bullets.length; j++) {
 						var bullet = bullets[j];
-						if (bullet.canDelete || bullet.down) {
+						if (bullet.canDelete) {
 							continue;
 						}
 						if (enemy.hit(bullet)) {
-							enemy.bang();
+							if (!bullet.down) {
+								enemy.bang();
+							}
+
 							bullet.bang();
 						}
 					}
 					if (enemy.hit(hero)) {
 						enemy.bang();
 						hero.bang();
-					}
-				}
-				for (var i = 0; i < ufo.length; i++) {
-					if (ufo[i].hit(hero)) {
-						ufo[i].bang();
-						reload(5);
 					}
 				}
 			}
@@ -457,6 +779,7 @@
 					}
 				}
 				enemies = ary;
+
 				ary = [];
 				idx = 0;
 				for (var i = 0; i < bullets.length; i++) {
@@ -466,6 +789,7 @@
 					}
 				}
 				bullets = ary;
+				//新添，删除ufo飞行物
 				ary = [];
 				idx = 0;
 				for (var i = 0; i < ufo.length; i++) {
@@ -475,6 +799,18 @@
 					}
 				}
 				ufo = ary;
+				
+				//删除shield飞行物
+				ary = [];
+				idx = 0;
+				for (var i = 0; i < shields.length; i++) {
+					if (!(shields[i].canDelete || shields[i].outOfBounds())) {
+						ary[idx] = shields[i];
+						idx++;
+					}
+				}
+				shields = ary;
+
 				if (hero.canDelete) {
 					heroes--;
 					if (heroes == 0) {
@@ -484,7 +820,7 @@
 					}
 				}
 			}
+
 		</script>
 	</body>
 </html>
-
