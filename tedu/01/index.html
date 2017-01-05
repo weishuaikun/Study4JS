@@ -23,9 +23,24 @@
 			enemy3.src = "images/enemy3.png";
 			var bg = new Image();
 			bg.src = "images/bg.png";
-			
+
 			enemy.onload = function() {
-				
+				//alert(enemy.width + "，" + enemy.height);
+				// var arr = [];
+				// for (var i = 0; i < 10; i++) {
+					// arr[i] = i;
+				// }
+				// alert(arr);
+
+
+				var a = []
+				for (var i = 0; i < 10; i++){
+					a[i] = function() {
+						alert(i);
+					}
+				}
+				alert("ddfd"+i)
+				a[6]();
 			}
 		</script>
 	</body>

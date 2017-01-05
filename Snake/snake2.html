@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>贪吃蛇</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Administrator" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>贪吃蛇</h1>
+			</header>
+
+			<div id="main"  >
+
+				<div id="stage" align="center" >
+					<!-- <img src="img/loading.gif" id="loading" /> -->
+					<canvas id="canvas" style="border:1px solid blue;" width="1027" height="650">
+						不支持画板对象
+					</canvas>
+				</div>
+
+			</div>
+
+			<footer>
+				<p>
+					&copy; Copyright  by 魏帅坤
+				</p>
+			</footer>
+			<script>
+				//初始化图片
+				var bg = new Image();
+				bg.src = "imgs/21422793_093949447000_2.jpg";
+				var snakeHead = new Image();
+				snakeHead.src = "imgs/snakeHead.png";
+				var snakeBody = new Image();
+				snakeBody.src = "imgs/snakeBody.png";
+				var apple = new Image();
+				apple.src = "imgs/apple.png";
+				var wall = new Image();
+				wall.src = "imgs/wall.png";
+				var startButton = new Image();
+				startButton.src = "imgs/startButton.jpg";
+				var bgReady = new Image();
+				bgReady.src = "imgs/bg_ready.jpg";
+
+				//初始化画布和画笔
+				var canvas = document.getElementById('canvas');
+				var ctx = canvas.getContext('2d');
+
+				//舞台的宽高
+				// var WIDTH = canvas.offsetWidth;
+				// var HEIGHT = canvas.offsetHeight;
+				var WIDTH = 1027;
+				var HEIGHT = 650;
+				//基础组件的宽高
+				var componentWidth = 13;
+				var componentHeight = 13;
+
+				//水平方向能放多少方块
+				var xCount = WIDTH / componentWidth;
+				//垂直方向上能放多少方块
+				var yCount = HEIGHT / componentHeight;
+
+				//游戏状态常量
+				var READY = 0;
+				var PAUSE = 1
+				var RUNNING = 2;
+				var LOSE = 3;
+
+				//当前游戏状态
+				gameState = READY;
+
+				//蛇头的方向
+				var NORTH = 1;
+				var SOUTH = 2;
+				var EAST = 3;
+				var WEST = 4;
+
+				//创建墙对象
+				var myWall = new Wall();
+				myWall.init();
+				//创建蛇对象
+				var mySnake = new Snake();
+				mySnake.init(1);
+				//创建苹果对象
+				var myApple = new Apple();
+				myApple.init(mySnake.snake);
+
+				//监听键盘事件:onkeydown监听的是功能键,onkeypress监听的是字母数字键
+				document.onkeypress = function(event) {
+					var e = event ? event : window.event;
+					if (e.keyCode == 97) {//左
+						mySnake2.setDirection(WEST);
+					}
+					if (e.keyCode == 119) {//上
+						mySnake2.setDirection(NORTH);
+					}
+					if (e.keyCode == 100) {//右
+						mySnake2.setDirection(EAST);
+					}
+					if (e.keyCode == 115) {//下
+						mySnake2.setDirection(SOUTH);
+					}
+				}
+				document.onkeydown = function(event) {
+					var e = event ? event : window.event;
+					if (e.keyCode == 37) {//左
+						mySnake.setDirection(WEST);
+					}
+					if (e.keyCode == 38) {//上
+						mySnake.setDirection(NORTH);
+					}
+					if (e.keyCode == 39) {//右
+						mySnake.setDirection(EAST);
+					}
+					if (e.keyCode == 40) {//下
+						mySnake.setDirection(SOUTH);
+					}
+				}
+				//创建蛇对象
+				var mySnake2 = new Snake();
+				mySnake2.init(2);
+
+				//点击画布游戏开始
+				canvas.onclick = function(){
+					gameState = RUNNING;
+				}
+
+				setInterval(function() {
+					if (gameState == READY) {
+						ctx.drawImage(bgReady, 0, 0);
+						ctx.drawImage(startButton,442,400);
+
+					} else if (gameState == RUNNING) {
+						ctx.drawImage(bg, 0, 0);
+						myWall.paint(ctx);
+						myApple.paint(ctx);
+
+						if (mySnake.state == LOSE) {
+							ctx.font = "50px 楷体";
+							ctx.fillText("snake1 game over", 50, 200);
+						} else {
+							//让第一只蛇移动
+							mySnake.state = mySnake.move(myApple,mySnake2);
+						}
+						if (mySnake2.state == LOSE) {
+							ctx.font = "50px 楷体";
+							ctx.fillText("snake2 game over", 50, 300);
+						} else {
+							//让第二只蛇移动
+							mySnake2.state = mySnake2.move(myApple,mySnake);
+						}
+						//画蛇
+						mySnake.paint(ctx);
+						mySnake2.paint(ctx);
+					}
+
+				}, 10);
+
+				function isActionTime(lastTime, interval) {
+					if (lastTime == 0) {
+						return true;
+					}
+					var currentTime = new Date().getTime();
+					return currentTime - lastTime >= interval;
+				}
+
+				//基本组件
+				function Component(x, y, img) {
+					this.x = x;
+					this.y = y;
+					this.img = img;
+					this.paint = function(ctx) {
+						ctx.drawImage(this.img, this.x, this.y);
+					}
+					this.equals = function(obj) {
+						return this.x == obj.x && this.y == obj.y;
+					}
+				}
+
+				//墙的构造方法
+				function Wall() {
+					this.wall = [];
+					//初始化墙壁
+					this.init = function() {
+						for (var x = 0; x < xCount; x++) {
+							//填充最上方和最下方的两行墙
+							var width = x * componentWidth;
+							var height = 0;
+							this.wall[this.wall.length] = new Component(width, height, wall);
+							height = (yCount - 1) * componentHeight;
+							this.wall[this.wall.length] = new Component(width, height, wall);
+						}
+						for (var y = 1; y < yCount - 1; y++) {
+							//填充最左边和最右边的两列墙
+							var width = 0;
+							var height = y * componentHeight;
+							this.wall[this.wall.length] = new Component(width, height, wall);
+							width = (xCount - 1) * componentWidth;
+							this.wall[this.wall.length] = new Component(width, height, wall);
+						}
+					}
+					//画墙壁
+					this.paint = function(ctx) {
+						for (var i = 0; i < this.wall.length; i++) {
+							this.wall[i].paint(ctx);
+						}
+					}
+				}
+
+				//苹果的构造方法
+				function Apple() {
+					this.apples = [];
+					this.init = function(snake) {
+						//屏幕上有几个苹果取决于这里向数组里放几个
+
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+						this.addRandomApple(snake);
+					}
+					//添加随机位置的苹果
+					this.addRandomApple = function(snake) {
+						var newApple = null;
+						//是否可以添加
+						var found = false;
+						while (!found) {
+							var x = parseInt(Math.random() * (xCount - 3) + 1) * componentWidth;
+							var y = parseInt(Math.random() * (yCount - 3) + 1) * componentHeight;
+							newApple = new Component(x, y, apple);
+							//确保新生成的苹果没有在蛇身上
+							var collision = false;
+							for (var i = 0; i < snake.length; i++) {
+								if (snake[i].equals(newApple)) {
+									collision = true;
+								}
+							}
+							found = !collision;
+						}
+						this.apples[this.apples.length] = newApple;
+					}
+					//画苹果
+					this.paint = function(ctx) {
+						for (var i = 0; i < this.apples.length; i++) {
+							this.apples[i].paint(ctx);
+						}
+					}
+				}
+
+				//蛇的构造方法
+				function Snake() {
+					this.snake = [];
+					this.mDirection = NORTH;
+					this.mNextDirection = NORTH;
+					//得分
+					this.score = 0;
+					//移动延迟，即每隔多少毫秒移动一次
+					this.moveDelay = 600;
+					//上次移动时间
+					this.mLastMove = 0;
+					//蛇的编号
+					this.no = 0;
+					//蛇的当前状态：RUNNING,LOSE
+					this.state = RUNNING;
+					this.init = function(no) {
+						this.no = no;
+						if (no == 1) {
+							this.snake[this.snake.length] = new Component(componentWidth * 35, componentHeight * 9, snakeHead);
+							this.snake[this.snake.length] = new Component(componentWidth * 34, componentHeight * 9, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 33, componentHeight * 9, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 32, componentHeight * 9, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 31, componentHeight * 9, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 30, componentHeight * 9, snakeBody);
+							
+						} else {
+							this.snake[this.snake.length] = new Component(componentWidth * 7, componentHeight * 7, snakeHead);
+							this.snake[this.snake.length] = new Component(componentWidth * 6, componentHeight * 7, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 5, componentHeight * 7, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 4, componentHeight * 7, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 3, componentHeight * 7, snakeBody);
+							this.snake[this.snake.length] = new Component(componentWidth * 2, componentHeight * 7, snakeBody);
+							
+						}
+					}
+					//画蛇的方法
+					this.paint = function(ctx) {
+						for (var i = 0; i < this.snake.length; i++) {
+							this.snake[i].paint(ctx);
+						}
+						ctx.font = "30px 楷体";
+						if (this.no == 1) {
+							//写分数
+							ctx.fillText("score:" + this.score, 30, 50);
+							//写速度
+							ctx.fillText("speed:" + this.moveDelay, 30, 80);
+						} else {
+							//写分数
+							ctx.fillText("score:" + this.score, 300, 50);
+							//写速度
+							ctx.fillText("speed:" + this.moveDelay, 300, 80);
+						}
+					}
+					//移动蛇的方法
+					this.move = function(apple,otherSnake) {
+						if (!isActionTime(this.mLastMove, this.moveDelay)) {
+							return;
+						}
+						this.mLastMove = new Date().getTime();
+						var growSnake = false;
+
+						// Grab the snake by the head
+						var head = this.snake[0];
+						var newHead = new Component(componentWidth * 1, componentHeight * 1, snakeHead);
+						//根据方向确定不同的坐标
+						this.mDirection = this.mNextDirection;
+						switch (this.mDirection) {
+							case EAST: {
+								newHead = new Component(head.x + componentWidth, head.y, snakeHead);
+								break;
+							}
+							case WEST: {
+								newHead = new Component(head.x - componentWidth, head.y, snakeHead);
+								break;
+							}
+							case NORTH: {
+								newHead = new Component(head.x, head.y - componentHeight, snakeHead);
+								break;
+							}
+							case SOUTH: {
+								newHead = new Component(head.x, head.y + componentHeight, snakeHead);
+								break;
+							}
+						}
+						//检测是否撞墙
+						if ((newHead.x < 1 * componentWidth) || (newHead.y < 1 * componentHeight) || (newHead.x > (xCount - 1) * componentWidth) || (newHead.y > (yCount - 2) * componentHeight)) {
+							//setMode(LOSE);
+							return LOSE;
+						}
+						//检测是否撞到了自己
+						for (var i = 0; i < this.snake.length; i++) {
+							if (this.snake[i].equals(newHead)) {
+								return LOSE;
+							}
+						}
+						//是否撞到了另外一只蛇
+						for(var i = 1;i <otherSnake.snake.length;i++ ){
+							if (otherSnake.snake[i].equals(newHead)) {
+								//根据另外一只蛇是死还是活进行不同的操作
+								if(otherSnake.state == LOSE){
+									//分数增加一分
+								this.score++;
+								//蛇移动的时间间隔缩小
+								this.moveDelay *= 0.9;
+								//使蛇身变长
+								growSnake = true;
+								}else{
+									return LOSE;
+								}
+							}
+						}
+						//检测是否吃到了苹果
+						for (var i = 0; i < apple.apples.length; i++) {
+							if (apple.apples[i].equals(newHead)) {
+								//从苹果数组中删除对应下标的苹果
+								apple.apples.splice(i, 1);
+								//向苹果数组中添加一个新苹果
+								apple.addRandomApple(this.snake);
+								//分数增加一分
+								this.score++;
+								//蛇移动的时间间隔缩小
+								this.moveDelay *= 0.9;
+								//使蛇身变长
+								growSnake = true;
+							}
+						}
+						//在当前蛇的头部添加一个方块
+						this.snake.splice(0, 0, newHead);
+						//将原来的蛇头图片更改为蛇身图片
+						head.img = snakeBody;
+						//因为head是对原来蛇头的引用，因此无需重新赋值
+						//this.snake[1] = head;
+						//如果没吃到苹果，蛇尾部删除一个块
+						if (!growSnake) {
+							this.snake.length = this.snake.length - 1;
+						}
+
+					}
+					//设置蛇的移动方向
+					this.setDirection = function(direction) {
+						//TODO 设置方向前需判断一下方向，如果设置的方向与原方向相反则不能设置
+						this.mNextDirection = direction;
+					}
+				}
+
+			</script>
+		</div>
+	</body>
+</html>

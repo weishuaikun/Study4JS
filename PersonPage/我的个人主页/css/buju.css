@@ -1,0 +1,35 @@
+.middle {
+  margin: 0 auto;
+}
+.middle .middle:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+table {
+  background-image: url("../imgs/bg.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: block;
+  width: 70%;
+  height: 100%;
+  border: 1px solid red;
+  margin: 0 auto;
+}
+table .middle:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+table td {
+  border: 1px solid red;
+}

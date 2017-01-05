@@ -87,11 +87,11 @@
 			sH[1].src = "images/hero1_protect2.png";
 			//无敌销毁状态图片
 			sH[2] = new Image();
-			sH[2].src = "images/hero_protect_disapper_n1.png";
+			sH[2].src = "images/hero_protect_disappear_n1.png";
 			sH[3] = new Image();
-			sH[3].src = "images/hero_protect_disapper_n2.png";
+			sH[3].src = "images/hero_protect_disappear_n2.png";
 			sH[4] = new Image();
-			sH[4].src = "images/hero_protect_disapper_n3.png";
+			sH[4].src = "images/hero_protect_disappear_n3.png";
 
 			var b = [];
 			b[0] = new Image();
@@ -350,9 +350,10 @@
 				
 				//画shield飞行物
 				for (var i = 0; i < shields.length; i++) {
-					if (shields[i]) {
+					// if (shields[i]) {
+						// shields[i].paint(ctx);
+					// }
 						shields[i].paint(ctx);
-					}
 				}
 				
 				ctx.font = "20px 微软雅黑";
@@ -510,7 +511,7 @@
 					//原来的代码
 					//bullets[bullets.length] = new Bullet(this.x + 45, this.y, 9, 21, 1, b, 2);
 					//新添的多重火力
-					//将45修改为图片的宽度，因为无敌状态的飞机和普通状态的飞机宽度不一样
+					//TODO 将45修改为图片的宽度，因为无敌状态的飞机和普通状态的飞机宽度不一样
 					if (this.multipleFire) {
 						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 1);
 						bullets[bullets.length] = new Bullet(this.x + this.width/2, this.y + 1, 9, 21, 1, b, 1, 2);

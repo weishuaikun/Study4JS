@@ -1,0 +1,10 @@
+document.write(num);
+	向HTML文档
+	请使用 document.write() 仅仅向文档输出写内容。
+	如果在文档已完成加载后执行 document.write，整个 HTML 页面将被覆盖：
+var a = prompt("请输入balbal：");
+	弹出一个输入对话框，定义的变量a将会接收输入框输入的值。
+
+将string 转换成 int 型
+	var n = parseInt("122");
+	var n = n*1;(利用js弱类型的特点，不推荐)

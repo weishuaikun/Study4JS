@@ -1,0 +1,178 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>植物大战僵尸</title>
+	</head>
+
+	<body>
+		<div id="stage" style="margin: 0 auto; width: 1400px; height: 600px; background: #323232; text-align: center; vertical-align: middle" >
+			<canvas id="canvas"  width="1400" height="600">
+				不支持画板对象时能看到
+			</canvas>
+		</div>
+		<script type="text/javascript" src="tools.js"></script>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			//游戏是否结束:0表示结束，1表示没有结束
+			var GAME_STATE = 1;
+			//植物的图像数组
+			var img4plant1 = [plant1, plant2, plant3];
+			var img4plant2 = [nut1, nut2, nut3];
+			var img4plant3 = [plant2, plant1, plant3];
+			var img4plant4 = [plant3, plant1, plant2];
+			var img4plant5 = [plant4, plant1, plant2];
+			//僵尸的图像数组
+			var img4zombie = [zombieM7, zombieM13, zombieA1, zombieA4, zombieS1, zombieS4];
+
+			//存储植物的数组
+			var plants = [];
+			//存储僵尸的数组
+			var zombies = [];
+
+			//初始化植物
+			plants[0] = new Plant(img4plant1, 250, 80, 81, 117, 90);
+			plants[1] = new Plant(img4plant2, 490, 150, 81, 117, 90);
+			plants[2] = new Plant(img4plant3, 250, 400, 81, 117, 90);
+			plants[3] = new Plant(img4plant4, 250, 500, 81, 117, 90);
+			plants[4] = new Plant(img4plant5, 250, 300, 81, 117, 90);
+			//初始化僵尸
+			zombies[0] = new Zombie(img4zombie, 1200, 10, 0);
+			zombies[1] = new Zombie(img4zombie, 1200, 110, 1);
+			zombies[2] = new Zombie(img4zombie, 1200, 210, 2);
+			zombies[3] = new Zombie(img4zombie, 1200, 310, 3);
+			zombies[4] = new Zombie(img4zombie, 1200, 410, 4);
+
+			//设置第二只僵尸的状态为移动
+			zombies[1].state = 1;
+
+			//上帝视角，你去安排对象的行为
+			setInterval(function() {
+				//画背景
+				ctx.drawImage(bg, 0, 0);
+				//画植物
+				for (var i = 0; i < plants.length; i++) {
+					plants[i].paint();
+					plants[i].changeImg();
+				}
+				//画僵尸
+				for (var i = 0; i < zombies.length; i++) {
+					zombies[i].paint();
+					//刷新控制图片的开关
+					zombies[i].swichImg();
+					if (GAME_STATE == 0) {
+						zombies[i].state = 3;
+					}
+				}
+				//只让第二只僵尸移动
+				if (zombies[1].state == 2) {
+					zombies[1].attack();
+				} else {
+					zombies[1].step();
+				}
+				//让第四只僵尸移动,通过判断第二只僵尸的位置坐标
+				if (zombies[1].x > 200 && zombies[1].x < 500) {
+					zombies[3].state = 1;
+				}
+
+			}, 50);
+
+			//植物的构造方法
+			function Plant(img, x, y, width, height, life) {
+				this.img = img;
+				this.x = x;
+				this.y = y;
+				this.width = width;
+				this.height = height;
+				this.life = life;
+				//图片的下标
+				this.currentIndex = 0;
+				//画植物
+				this.paint = function() {
+					if (this.life > 0) {
+						ctx.drawImage(img[this.currentIndex], this.x, this.y);
+					}
+				}
+				//根据生命值切换图片
+				this.changeImg = function() {
+					if (this.life > 30) {
+						this.currentIndex = 1;
+					} else {
+						this.currentIndex = 2;
+					}
+				}
+			}
+
+			//僵尸的构造方法
+			function Zombie(img, x, y, no) {
+				this.img = img;
+				this.x = x;
+				this.y = y;
+				//指的是僵尸的位置:0、1、2、3、4
+				this.no = no;
+				//使用图片的下标
+				this.currentIndex = 0;
+				//记录僵尸的状态:1.移动 2.攻击 3.站立
+				this.state = 3;
+				//切换图片
+				this._switch = true;
+				//开关方法
+				this.swichImg = function() {
+					this._switch = !this._switch;
+				}
+				//画僵尸
+				this.paint = function() {
+					if (this.state == 1) {
+						if (this._switch) {
+							ctx.drawImage(img[0], this.x, this.y);
+						} else {
+							ctx.drawImage(img[1], this.x, this.y);
+						}
+					} else if (this.state == 2) {
+						if (this._switch) {
+							ctx.drawImage(img[2], this.x, this.y);
+						} else {
+							ctx.drawImage(img[3], this.x, this.y);
+						}
+					} else {
+						if (this._switch) {
+							ctx.drawImage(img[4], this.x, this.y);
+						} else {
+							ctx.drawImage(img[5], this.x, this.y);
+						}
+					}
+				}
+				//僵尸的移动方法
+				this.step = function() {
+					//只有移动状态僵尸的x坐标才减小
+					if (this.state == 1) {
+						this.x = this.x - 10;
+					}
+					//判断是否碰到植物了并且植物生命值大于0
+					if (this.x <= (plants[this.no].x + plants[this.no].width) && (plants[this.no].life > 0)) {
+						//切换成攻击状态
+						this.state = 2;
+					} else if (this.x > 200) {
+						this.state = 1;
+					} else {
+						//切换为站立状态，即到达墙壁了
+						this.state = 3;
+						//游戏结束
+						GAME_STATE = 0;
+					}
+				}
+				//僵尸的攻击方法
+				this.attack = function() {
+					if (plants[this.no].life <= 0) {
+						this.state = 1;
+						return;
+					}
+					plants[this.no].life = plants[this.no].life - 1;
+				}
+			}
+
+		</script>
+	</body>
+</html>

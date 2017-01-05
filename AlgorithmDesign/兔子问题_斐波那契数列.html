@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+		More info: h5bp.com/b/378 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>js算法设计</title>
+
+		<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<script src="js/libs/modernizr-2.0.6.min.js"></script>
+	</head>
+
+	<body>
+
+		<h2>
+			古典问题：有一对兔子，从出生后第3个月起每个月都生一对兔子，小兔子长到第四个
+			月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子总数为多少？
+		</h2>
+
+		<!-- JavaScript at the bottom for fast page loading -->
+
+		<script>
+			function calculateRabbit(month) {
+				if (month == 1 || month == 2) {
+					return 1;
+				} else {
+					return (calculateRabbit(month - 1) + calculateRabbit(month - 2));
+				};
+			}
+			
+			
+			//输出1到9月每月兔子的数量
+			document.writeln("月份"+"\t总数量<br>")
+			var num = 0;
+			for (var i = 1; i < 25; i++) {
+				num = calculateRabbit(i);
+				document.write("" + i + ":\t" + num + "<br>");
+			};
+			
+			//弹出警告框询问月份
+			while(true){
+			var month = prompt("您想求第几个月兔子的数量？请输入月份：");
+			alert("第"+month+"个月兔子的数量为"+calculateRabbit(month)+"只");
+			}
+			
+			
+		</script>
+
+	</body>
+</html>

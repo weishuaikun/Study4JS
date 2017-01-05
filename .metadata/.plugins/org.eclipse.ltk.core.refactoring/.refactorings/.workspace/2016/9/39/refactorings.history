@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;tedu/country&apos;" deleteContents="false" description="Delete resource &apos;tedu/country&apos;" element1="/tedu/country" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1474613129751"/>&#x0A;<refactoring comment="Delete 4 resources" deleteContents="false" description="Delete 4 resources" element1="/tedu/country/img/1421485930520621.png" element2="/tedu/country/img/jz.png" element3="/tedu/country/img/W020150914605312522390.jpg" element4="/tedu/country/img/wKgB4lKLf_WATsuhAAwItMrc5ys23.jpg" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="4" stamp="1474613255600"/>
+</session>

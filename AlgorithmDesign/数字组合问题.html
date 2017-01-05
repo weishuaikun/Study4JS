@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>数字组合问题</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Administrator" />
+
+		<meta name="viewport" content="width=device-width initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>数字组合问题</h1>
+			</header>
+			
+			<h2>
+				有1、2、3、4四个数字，能组成多少个互不相同且无重复数字的三位数？都是多少？
+				
+			</h2>
+			
+			<script>
+				var i = 0;
+				var j = 0;
+				var k = 0;
+				var t = 0;
+				for(i = 1; i <= 4; i++){
+					for(j = 1; j <= 4;j++){
+						for(k = 1; k <= 4; k++){
+							if(i != j && j != k && i != k){
+								t += 1;
+								num = i * 100 + j * 10 + k;
+								document.write(num);
+								document.write("<br>");
+							}
+						}
+					}
+				}
+				alert("共可组成" + t + "个互不相同且无重复数字的三位数" );
+			</script>
+		</div>
+	</body>
+</html>

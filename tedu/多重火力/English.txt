@@ -1,0 +1,28 @@
+//添加无敌状态图片
+			[0-1,2-5,6-7,8-10]
+			[2,4,2,3]
+			[正常，摧毁，无敌，销毁无敌]
+			h[0] = new Image();
+			h[0].src = "images/hero1.png";
+			h[1] = new Image();
+			h[1].src = "images/hero2.png";
+			h[2] = new Image();
+			h[2].src = "images/hero_blowup_n1.png";
+			h[3] = new Image();
+			h[3].src = "images/hero_blowup_n2.png";
+			h[4] = new Image();
+			h[4].src = "images/hero_blowup_n3.png";
+			h[5] = new Image();
+			h[5].src = "images/hero_blowup_n4.png";
+			//无敌状态
+			h[6] = new Image();
+			h[6].src = "images/hero1_protect1.png";
+			h[7] = new Image();
+			h[7].src = "images/hero1_protect2.png";
+			//添加无敌销毁状态图片
+			h[8] = new Image();
+			h[8].src = "images/hero_protect_disapper_n1.png";
+			h[9] = new Image();
+			h[9].src = "images/hero_protect_disapper_n2.png";
+			h[10] = new Image();
+			h[10].src = "images/hero_protect_disapper_n3.png";

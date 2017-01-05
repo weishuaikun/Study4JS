@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>求球的反弹高度</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Administrator" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>求球的反弹高度</h1>
+			</header>
+			
+			<h2>
+				一球从100米高度自由落下，每次落地后反弹回原高度的一半；再落下，求它在第10次落地时，共经过多少米？第10次反弹多高？
+			</h2>
+			
+			<script>
+				var s = 0;
+				var t = 100;
+				var n = 10;
+				for (var i = 1;i<=n;i++){
+					s += t;
+					t = t / 2;
+				}
+				alert("第"+n+"次落地时，共经过"+s+"米,\n第"+n+"次反弹"+t+"米");
+			</script>
+
+			
+		</div>
+	</body>
+</html>

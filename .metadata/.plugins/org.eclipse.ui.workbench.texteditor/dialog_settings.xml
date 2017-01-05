@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="wholeword"/>
+		<item value="otherSnake" key="selection"/>
+		<list key="findhistory">
+			<item value="otherSnake"/>
+			<item value="disapper"/>
+			<item value="state4mySnake"/>
+			<item value="heroes"/>
+			<item value="SuperTimeUnit"/>
+			<item value="this.width"/>
+			<item value="SuperState"/>
+			<item value="NormalState"/>
+		</list>
+	</section>
+</section>
