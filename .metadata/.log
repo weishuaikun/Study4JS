@@ -2108,3 +2108,32 @@ java.io.IOException: 另一个程序已锁定文件的一部分，进程无法�
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:622)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:577)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1410)
+
+!ENTRY org.eclipse.ltk.ui.refactoring 4 10000 2017-01-05 10:13:22.401
+!MESSAGE Internal Error
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Problems encountered while moving resources.
+	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1609)
+	at org.eclipse.ltk.core.refactoring.resource.RenameResourceChange.perform(RenameResourceChange.java:123)
+	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:278)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation$1.run(PerformChangeOperation.java:258)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:306)
+	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:92)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:218)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:87)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
+Contains: fatal: bad source, source=ELS/31/text01.html, destination=Tetris/31/text01.html
+
+!SUBENTRY 1 org.eclipse.core.resources 4 4 2017-01-05 10:13:22.402
+!MESSAGE Problems encountered while moving resources.
+!SUBENTRY 2 com.aptana.git.core 4 128 2017-01-05 10:13:22.402
+!MESSAGE fatal: bad source, source=ELS/31/text01.html, destination=Tetris/31/text01.html
+
+
+!ENTRY org.eclipse.core.resources 4 4 2017-01-05 10:13:22.402
+!MESSAGE Problems encountered while moving resources.
+!SUBENTRY 1 com.aptana.git.core 4 128 2017-01-05 10:13:22.402
+!MESSAGE fatal: bad source, source=ELS/31/text01.html, destination=Tetris/31/text01.html
+
