@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;设计模式的六大原则.txt&apos; to &apos;参考资料&apos;" description="Move &apos;设计模式的六大原则.txt&apos; to &apos;参考资料&apos;" destination="参考资料" element1="设计模式的六大原则.txt" element2="设计模式六大原则.pdf" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="2" stamp="1489549492688" updateReferences="true"/>
+</session>
