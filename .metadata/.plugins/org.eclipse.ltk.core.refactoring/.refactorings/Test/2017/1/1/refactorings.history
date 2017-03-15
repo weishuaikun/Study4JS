@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;Test/内存泄漏&apos; to &apos;内存泄漏.html&apos;" description="Rename resource &apos;内存泄漏&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="内存泄漏" name="内存泄漏.html" stamp="1483617585599" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;Test/new_file.html&apos; to &apos;内存泄漏.html&apos;" description="Rename resource &apos;new_file.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="new_file.html" name="内存泄漏.html" stamp="1483617859272" updateReferences="true"/>
+</session>

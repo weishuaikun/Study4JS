@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>俄罗斯方块</title> 
+        <script>
+        	var train = [
+        		["小明","小王"]
+        	];
+        	//alert(train[0]);
+        	//使用双重for循环去遍历二维数组，外层循环控制行，内层循环控制列
+        	for(var i = 0;i< train.length;i++){
+        		for(var j = 0;j < train[i].length;j++){
+        			document.write(train[i][j] + "  ");
+        		}
+        		//输出完内层数组后（一行结束后）换行
+        		document.write("<br/>");
+        	}
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

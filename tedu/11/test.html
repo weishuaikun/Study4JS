@@ -4,18 +4,100 @@
 		<meta charset="utf-8">
 		<title>飞机大战</title>
 	</head>
+
 	<body>
 		<div id="stage" style="margin: 0 auto; width: 480px; height: 650px; text-align: center; vertical-align: middle" >
-			<canvas id="canvas" style="border:2px solid red;" width="480" height="650">
+			<canvas id="canvas" style="border:0px solid red;" width="480" height="650">
 				不支持画板对象
 			</canvas>
 		</div>
 		<script>
-                     
-            
-                
-           
-                
+			//创建Ball构造方法
+			function Ball(){
+				this.type = "足球";
+				this.size = "小号";
+				this.color = "白色";
+				this.inflate = function() {
+					alert("给" + this.type + "充气");
+				}
+			}
+			//使用构造方法Ball创建football对象
+			var football = new Ball();
+			football.inflate();
+			//使用构造方法Ball创建basketball对象
+			var basketball = new Ball();
+			basketball.inflate();
+
+			//重构Ball构造方法，传参数
+			function Ball(type, size, color) {
+				this.type = type;
+				this.size = size;
+				this.color = color;
+				this.inflate = function() {
+					alert("给" + this.type + "充气");
+				}
+			}
+			//使用构造方法Ball创建basketball对象(传参)
+			var basketball = new Ball("篮球", "中号", "橙色");
+			basketball.inflate();
+
+			//创建Square构造方法
+			//给Square构造方法定义计算周长的方法perimeter和面积area
+			function Square(length) {
+				this.length = length;
+				this.perimeter = function() {
+					return this.length * 4;
+				}
+				this.area = function() {
+					return this.length * this.length;
+				}
+			}
+			var square = new Square(5);
+			var p = square.perimeter();
+			alert("周长为：" + p);
+			var a = square.area();
+			alert("面积为：" + a);
+			
+			//重构Fish构造方法，传参数
+			function Fish(type, color, weight) {
+				this.type = type;
+				this.color = color;
+				this.weight = weight;
+				this.eat = function() {
+					alert(this.color + "的" + this.type + "吃食");
+				}
+			}
+			var goldfish = new Fish("金鱼","红色",2);
+			alert(goldfish.type+":"+goldfish.color+":"+goldfish.weight);
+			goldfish.eat();		
+			
+            //重构Student构造方法，传参数
+			function Student(stuNo,name,age,gender) {
+				this.stuNo = stuNo;
+				this.name = name;
+				this.age = age;
+				this.gender = gender;
+				this.study=function(){
+					alert(this.name+"在学习编程");
+				}
+			}
+			var stu = new Student(17,"王小利",10,"男");
+			alert(stu.stuNo+":"+stu.name+":"+stu.age+":"+stu.gender);
+			stu.study();
+			
+			//亲自出码
+			//构造Car构造方法
+			function Car(type, color, num) {
+				this.type = type;
+				this.color = color;
+				this.num = num;
+				this.drive = function() {
+					alert("开车啦");
+				}
+			}
+			var bus = new Car("公交车","蓝色",4);
+			bus.drive();
+
 		</script>
 	</body>
 </html>

@@ -1,0 +1,69 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>愤怒小鸟</title>
+	</head>
+
+	<body>
+		<div id="stage" style="margin: 0 auto; width: 1400px; height: 650px; text-align: center; vertical-align: middle" >
+			<canvas id="canvas"  width="1350" height="650">
+				不支持画板对象时能看到
+			</canvas>
+		</div>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			
+			var bg = new Image();
+			bg.src = "images/bg2.png";
+
+			var pig = new Image();
+			pig.src = "images/pig.png";
+
+			var pig02 = new Image();
+			pig02.src = "images/pig02.png";
+
+			var bird = new Image();
+			bird.src = "images/bird.png";
+
+			var slingshot1 = new Image();
+			slingshot1.src = "images/slingshot1.png";
+
+			var slingshot2 = new Image();
+			slingshot2.src = "images/slingshot2.png";
+
+			var stand1 = new Image();
+			stand1.src = "images/stand1.png";
+			var stand2 = new Image();
+			stand2.src = "images/stand2.png";
+			var stand3 = new Image();
+			stand3.src = "images/stand3.png";
+	
+			/**
+			 *画小鸟和弹弓
+			 *slingshot1	(155,305)
+			 * bird			(135,315)
+			 * slingshot2	(125,300) 
+			 */
+			
+			
+			/**
+			 *画地上的三只小鸟
+			 *  bird		(105,460)
+			 * 	bird		(50,500)
+			 * 	bird		(10,500)
+			 */
+			
+			/**
+			 *画小猪
+			 * pig			(825,365)
+			 * pig			(910,365)
+			 * pig			(990,365)
+			 * pig			(1130,315)
+			 */
+			
+
+		</script>
+	</body>
+</html>

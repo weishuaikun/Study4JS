@@ -1,6 +1,6 @@
 //org.eclipse.ui.commands/state/com.aptana.explorer.commands.toggleAppExplorer/org.eclipse.ui.commands.toggleState=false
 ACTIVE_HYPERLINK_COLOR=13,17,113
-ColorsAndFontsPreferencePage.expandedCategories=Torg.eclipse.ui.workbenchMisc
+ColorsAndFontsPreferencePage.expandedCategories=Torg.eclipse.ui.workbenchMisc\tForg.eclipse.jface.textfont
 ColorsAndFontsPreferencePage.selectedElement=Forg.eclipse.jface.textfont
 HYPERLINK_COLOR=13,17,113
 com.vectrace.mercurialeclipse.ui.colorsandfonts.IgnoredBackgroundColor=255,255,255
@@ -22,4 +22,4 @@ hyperlinkColor=13,17,113
 hyperlinkColor.SystemDefault=false
 org.eclipse.egit.ui.UncommittedChangeBackgroundColor=115,255,101
 org.eclipse.egit.ui.UncommittedChangeForegroundColor=0,0,0
-org.eclipse.jface.textfont=1|Consolas|14.25|0|WINDOWS|1|-19|0|0|0|400|0|0|0|0|3|2|1|49|Consolas;
+org.eclipse.jface.textfont=1|Consolas|15.75|0|WINDOWS|1|-21|0|0|0|400|0|0|0|0|3|2|1|49|Consolas;

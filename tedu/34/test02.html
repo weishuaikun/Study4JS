@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>俄罗斯方块</title> 
+        
+    </head>
+    <body>
+    	<!-- 按钮 -->
+    	<input type="button" value="点我" id="btn" />
+    	
+    	<p id="p">hello everyone！</p>
+    	
+    	<script>
+        	//通过ID找到按钮对象
+			var btn = document.getElementById("btn");
+			//让按钮监听点击事件
+			btn.onclick =function(){
+				//修改p标签的内容
+				//先找到p标签
+				var p = document.getElementById("p");
+				//对p标签呢的innerHTML属性重新赋值
+				p.innerHTML = "你好";
+			}
+        </script>
+    </body>
+</html>

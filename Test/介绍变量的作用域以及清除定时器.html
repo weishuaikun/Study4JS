@@ -1,0 +1,94 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>按钮演示</title>
+	</head>
+	<body>
+		<input type="button" value="开始" id="btn1"/>
+		<input type="button" value="结束" id="btn2"/>
+
+		<script>
+			//通过id属性的值找到对应的按钮对象
+			var start = document.getElementById("btn1");
+			var end = document.getElementById("btn2");
+			var interval;
+			//在警告框里显示按钮对象的value属性的值
+			start.onclick = function() {
+				//alert(start.value);
+				//通过setInterval方法的返回值拿到定时器的引用
+				interval = setInterval(function() {
+					console.log("hello");
+				}, 10);
+			}
+			end.onclick = function() {
+				//alert(end.value);
+				//清除定时器
+				clearInterval(interval);
+			}
+			
+			//只执行一次的定时任务
+			var timeout = setTimeout(function(){
+				alert("hello world");
+			},1000);
+			//清除定时任务
+			clearTimeout(timeout);
+			/*
+			 //计算商品过期促销时间
+			 var longNow = new Date().getTime();
+			 var perDay = 24*60*60*1000*15;
+			 //计算15天之前的 毫秒数
+			 var time = longNow - perDay;
+			 alert(new Date(time));
+			 */
+
+			/*
+			 //获得定时器的引用
+			 var interval = setInterval(function(){
+			 console.log("hello");
+			 },10);
+
+			 setTimeout(function(){
+			 //清除定时器
+			 clearInterval(interval);
+			 },200);
+			 */
+
+			/*
+			 function test(){
+			 alert("a");
+			 //return之前的代码会执行，而return之后的代码是不会执行的
+			 //return语句的功能就是结束（跳出）当前方法
+			 return;
+			 alert("b");
+			 }
+
+			 test();
+			 */
+			
+			/*
+			//变量的作用域:全局变量、局部变量
+			
+			//没有定义在方法内的变量就叫做全局变量
+			//全局变量在哪都能访问到
+			var i = 0;
+			var b = 3;
+			var c = 4;
+			function test(){
+				//在方法里定义的变量叫做局部变量
+				//只有在当前方法里才可以访问局部变量
+				var i = 1;
+				var b = 2;
+				var c = 5;
+				alert(i);
+				alert(b);
+				alert(c);
+			}
+			test();
+			alert(b);
+			alert(c);
+			*/
+
+		</script>
+	</body>
+</html>

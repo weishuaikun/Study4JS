@@ -1,0 +1,199 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>捕鱼达人</title>
+	</head>
+
+	<body>
+		<div id="container">
+			<div id="main"  >
+				<div id="stage" style="margin: 0 auto; width: 800px; height: 480px;  text-align: center; vertical-align: middle" >
+
+					<canvas id="canvas"  width="800" height="480">
+						不支持画板对象时能看到
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext('2d');
+
+			var bg = new Image();
+			bg.src = "images/bg.jpg";
+
+			
+			//存放所有的鱼类对象
+			var allFish = [];
+
+			//渔网对象
+			var net = new Net();
+			//加载渔网图片
+			net.init();
+
+			//控制鱼产生的时间
+			var fishInterval = 2000;
+			var fishLastTime = 0;
+			//用作游戏的控制器
+			setInterval(function() {
+				//只有时间到了才生成鱼
+				if (isActionTime(fishLastTime, fishInterval)) {
+					//生成鱼类对象并存放到数组中
+					var fish = new Fish();
+					fish.init();
+					allFish[allFish.length] = fish;
+					//修改lastTime
+					fishLastTime = new Date().getTime();
+				}
+
+				//画背景
+				ctx.drawImage(bg, 0, 0);
+				//画鱼
+				for (var i = 0; i < allFish.length; i++) {
+					allFish[i].paint(ctx);
+				}
+
+				//使鱼移动
+				for (var i = 0; i < allFish.length; i++) {
+					allFish[i].step();
+				}
+
+				//画网
+				net.paint(ctx);
+				
+				//写得分
+				updateScore();
+
+			}, 10);
+
+			//鼠标移动控制渔网
+			canvas.onmousemove = function(e) {
+				var point = getPointOnCanvas(e.x, e.y);
+				net.x = point.x - 80;
+				net.y = point.y - 80;
+			}
+			//坐标转换：浏览器坐标变成画布坐标
+			function getPointOnCanvas(x, y) {
+				var bbox = canvas.getBoundingClientRect();
+				return {
+					x : x - bbox.left,
+					y : y - bbox.top
+				}
+			}
+
+			//鱼类对象的构造方法
+			function Fish() {
+				//1 - 11之间的随机整数
+				this.randomFish = parseInt(Math.random() * 11 + 1);
+
+				this.x = 800;
+				this.y = Math.random() * (480 - 100);
+				this.score = this.randomFish + 1;
+				//存放鱼类对象所需要的图片
+				this.fish = [];
+				//当前使用的是哪一张图片
+				this.frame = this.fish[0];
+
+				//初始化,用来加载图片
+				this.init = function() {
+					for (var i = 0; i < 10; i++) {
+						var img = new Image();
+						img.src = "images/fish" + this.randomFish + "_" + i + ".png";
+						this.fish[this.fish.length] = img;
+					}
+				}
+				//判断时间间隔是否到了
+				this.interval = 40;
+				this.lastTime = 0;
+				this.timeOut = function() {
+					var current = new Date().getTime();
+					var t = current - this.lastTime;
+					if (t >= this.interval) {
+						this.lastTime = current;
+						return true;
+					}
+					return false;
+				}
+				//鱼游动的方法
+				this.index = 0;
+				this.step = function() {
+					if (this.timeOut()) {
+						this.x -= 2;
+						//this.y = (Math.cos(this.x) + 1) * 50;
+						//this.x = this.x - 2;
+						this.frame = this.fish[this.index % 10];
+						this.index++;
+					}
+				}
+				//画鱼的方法
+				this.paint = function(ctx) {
+					if (this.frame) {
+						ctx.drawImage(this.frame, this.x, this.y);
+					}
+				}
+			}
+
+			//鱼网的构造方法
+			function Net() {
+				this.x = 0;
+				this.y = 0;
+				this.img = null;
+				this.init = function() {
+					this.img = new Image();
+					this.img.src = "images/net.png";
+				}
+				this.paint = function(ctx) {
+					//先判断图片是否为空
+					if (this.img) {
+						ctx.drawImage(this.img, this.x, this.y);
+					}
+				}
+			}
+
+			//工具方法
+			function isActionTime(lastTime, interval) {
+				if (lastTime == 0) {
+					return true;
+				}
+				//获取当前时间
+				var c = new Date().getTime();
+				return c - lastTime >= interval;
+			}
+			
+			
+			//---------------------------以下代码为捕鱼相关代码--------------------------
+			
+			//记录游戏的总分数
+			var score = 0;
+			//捕鱼方法
+			canvas.onclick = function() {
+				//判断网有没有捕到鱼
+				for (var i = 0; i < allFish.length; i++) {
+					if ((allFish[i].x > (net.x - 50) && allFish[i].x < (net.x + 160)) && (allFish[i].y > (net.y - 48) && allFish[i].y < (net.y + 160))) {
+						//捕到鱼后做的事
+						//得分增加
+						score += allFish[i].score;
+						//让鱼消失
+						removeFish(i);
+					}
+
+				}
+			}
+			
+			//删除数组中指定下标的元素
+			function removeFish(i){
+				allFish.splice(i,1);
+			}
+			
+			//更新游戏分数
+			function updateScore(){
+				ctx.font = "20px 微软雅黑";
+				ctx.fillStyle = "green";
+				ctx.fillText("Score:" + score,10,20);
+			}
+		</script>
+	</body>
+</html>
+

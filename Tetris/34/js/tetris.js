@@ -19,7 +19,11 @@ var tetris = {
 	start : function() {
 		this.pg = $('.playground')[0];
 		this.shape = new T();
-		this.paintShape();
+		this.softDrop();
+		this.timer = setInterval(function() {
+			tetris.softDrop();
+		}, this.interval);
+
 	},
 	//创建绘制O型图像的方法
 	paintShape : function() {
@@ -40,13 +44,24 @@ var tetris = {
 		this.pg.appendChild(frag);
 	},
 	//添加随机生成不同小方块的方法
-	randomShape : function(){
-		switch(parseInt(Math.random()*3)){
-			case 0: return new O();
-			case 1: return new I();
-			case 2: return new T();
+	randomShape : function() {
+		switch(parseInt(Math.random()*3)) {
+			case 0:
+				return new O();
+			case 1:
+				return new I();
+			case 2:
+				return new T();
 		}
-	}
+	},
+	softDrop : function() {
+		this.paintShape();
+		this.shape.softDrop();
+	},
+
+	timer : null,
+	interval : 1000,
+
 }
 
 //调用开始方法

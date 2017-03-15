@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8"/>
-        <title>俄罗斯方块</title>  
-        <script>
-	     
-	        
-        </script>
-    </head>
-    <body>
-    </body>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>俄罗斯方块</title>
+		<script>
+			//声明常量需要使用const关键字
+			//const HEAD = 1;
+			//试着更改常量的值
+			//HEAD = HEAD + 1;
+			//alert(HEAD);
+
+			var player = {
+				NAME : "君莫笑",
+				level : 35,
+				equipment : "键盘",
+				introduce : function() {
+					alert("玩家姓名:" + this.NAME + "善于使用" + this.equipment);
+				}
+			};
+			//访问对象的属性
+			alert(player.NAME);//君莫笑
+			player.NAME = "小明";
+			//调用对象的方法
+			player.introduce();
+
+		</script>
+	</head>
+	<body></body>
 </html>

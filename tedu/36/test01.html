@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>俄罗斯方块</title> 
+        <script>
+        	/*
+        	 * 队列：数据结构的一种，跟数组一样，都是常见的数据结构
+        	 * 特征：先进先出（first in first out）
+        	 * 
+        	 * 对于队列来说，我们只关心两个问题：
+        	 * 		1、谁在队首：在队首的先接受服务，然后出队
+        	 * 		2、谁在队尾：谁最后进来，谁是队尾
+        	 * 
+        	 * 队列只有两个最基本的操作：
+        	 * 		1、出队：只能从队首出队
+        	 * 		2、入队：只能从队尾入队
+        	 */
+        	
+        	function Queue(){
+        		this.queue = new Array(100); 
+        		this.head = 0;
+        		this.tail = 0;
+        		//入队
+        		this.enQueue = function(value){
+        			this.queue[this.tail] = value;
+        			//改变队尾
+        			this.tail++;
+        		};
+        		//出队
+        		this.outQueue = function(){
+        			var temp = this.queue[this.head];
+        			this.head++;
+        			return temp;
+        		}
+        		
+        	}
+        	
+        	
+        	var q = new Queue();
+        	q.enQueue("1赵");
+        	q.enQueue("2赵");
+        	q.enQueue("3赵");
+        	q.enQueue("4赵");
+        	q.enQueue("5赵");
+        	q.enQueue("6赵");
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	q.outQueue();
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	q.outQueue();
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	q.outQueue();
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	q.outQueue();
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	q.outQueue();
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	q.outQueue();
+        	for(var i = q.head;i < q.tail;i++){
+        		console.log(q.queue[i]);
+        	}
+        	
+        	
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

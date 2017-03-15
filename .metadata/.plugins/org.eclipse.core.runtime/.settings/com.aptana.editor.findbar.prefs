@@ -1,3 +1,5 @@
-FIND_BAR_DECORATOR_FIND_ENTRIES=\#\r\n\#Tue Oct 25 19\:39\:24 CST 2016\r\n8\=45\r\n7\=NormalState\r\n6\=SuperState\r\n5\=this.width\r\n4\=SuperTimeUnit\r\n3\=heroes\r\n2\=state4mySnake\r\n1\=disapper\r\n0\=otherSnake\r\n
-FIND_BAR_DECORATOR_REPLACE_ENTRIES=\#\r\n\#Wed Oct 19 19\:56\:09 CST 2016\r\n5\=shields\r\n4\=hero\r\n3\=this.width\r\n2\=this.width/2\r\n1\=SUPER_TIME_UNIT\r\n0\=disappear\r\n
+FIND_BAR_DECORATOR_FIND_ENTRIES=\#\r\n\#Sat Mar 04 16\:59\:47 CST 2017\r\n6\=this.width\r\n5\=SuperTimeUnit\r\n4\=heroes\r\n3\=state4mySnake\r\n2\=disapper\r\n1\=otherSnake\r\n0\=img\r\n7\=SuperState\r\n
+FIND_BAR_DECORATOR_REPLACE_ENTRIES=\#\r\n\#Sat Mar 04 16\:59\:47 CST 2017\r\n6\=hero\r\n5\=this.width\r\n4\=this.width/2\r\n3\=SUPER_TIME_UNIT\r\n2\=disappear\r\n1\=frames,baseFrameCount\r\n0\=images\r\n7\=shields\r\n
+com.aptana.editor.findbar.caseSensitiveFindBar=true
+com.aptana.editor.findbar.wholeWordFindBar=true
 eclipse.preferences.version=1

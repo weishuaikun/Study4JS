@@ -4,10 +4,7 @@
 		<meta charset="UTF-8"/>
 		<title>俄罗斯方块</title>
 		<link rel="stylesheet" href="css/tetris.css"/>
-		<script>
-			
-			
-		</script>
+		<script></script>
 	</head>
 	<body>
 		<!--加载游戏的背景-->
@@ -23,10 +20,94 @@
 				LEVEL:<span>1</span>
 			</p>
 		</div>
+
 		<script>
 			window.$ = function(selector) {
 				return document.querySelectorAll(selector);
 			}
+			//当与该HTML文件相关的文件都加载完毕后会触发onload事件
+			window.onload = function() {
+				tetris.start();
+			}
+			//俄罗斯方块所需的初始化数据
+			var tetris = {
+				//多少行
+				RN : 20,
+				//多少列
+				CN : 10,
+				//小方块的边长
+				CELL_SIZE : 26,
+				IMGS : {
+					O : "img/O.png",
+					I : "img/I.png",
+					T : "img/T.png"
+				},
+				//偏移量
+				OFFSET_X : 15,
+				OFFSET_Y : 15,
+				//当前方块的形状
+				shape : null,
+				pg : null,
+				//游戏开始方法，初始化
+				start : function() {
+					//获取游戏场景
+					this.pg = $('.playground')[0];
+					this.shape = new T();
+					//绘制俄罗斯方块
+					this.paintShape();
+				},
+				//绘制形状
+				paintShape : function() {
+					//创建文档碎片（筐）
+					var frag = document.createDocumentFragment();
+					//遍历图片数组,将所有的img都放到碎片里。链式调用
+					for (var i = 0; i < this.shape.cells.length; i++) {
+						//计算小方块的坐标
+						var c = this.shape.cells[i];
+						var x = this.CELL_SIZE * c.col + this.OFFSET_X;
+						var y = this.CELL_SIZE * c.row + this.OFFSET_Y;
+						//创建img标签
+						var img = new Image();
+						img.src = c.img;
+						//通过设置img标签的样式来制定img相对于父标签的位置
+						img.style.left = x + "px";
+						img.style.top = y + "px";
+						//将img标签放到碎片里（筐里）
+						frag.appendChild(img);
+					}
+					//将碎片放到游戏场景里
+					this.pg.appendChild(frag);
+				}
+			}
+
+			//小方块的构造方法
+			function Cell(row, col, img) {
+				this.row = row;
+				this.col = col;
+				this.img = img;
+			}
+
+			//O型的构造方法
+			function O() {
+				this.img = tetris.IMGS;
+				this.cells = [new Cell(0, 4, this.img), new Cell(0, 5, this.img), new Cell(1, 4, this.img), new Cell(1, 5, this.img)];
+			}
+
+			function I() {
+				var img = tetris.IMGS.I;
+				this.cells = [new Cell(0, 3, img), new Cell(0, 5, img), new Cell(0, 4, img), new Cell(0, 6, img)];
+				this.img = tetris.IMGS.I;
+			}
+
+			function T() {
+				var img = tetris.IMGS.T;
+				this.cells = [new Cell(1, 3, img), new Cell(1, 5, img), new Cell(1, 4, img), new Cell(0, 4, img)];
+				this.img = tetris.IMGS.T;
+			}
+
+			// var ary = $(".playground");
+			// alert(ary.length);//1
+
 		</script>
 	</body>
 </html>

@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>按钮演示</title>
+	</head>
+	<body>
+		<input type="button" value="开始" id="btn1"/>
+		<input type="button" value="结束" id="btn2"/>
+
+		<script>
+			/*
+			 //变量的作用域:全局变量、局部变量
+
+			 //没有定义在方法内的变量就叫做全局变量
+			 //全局变量在哪都能访问到
+			 var i = 0;
+			 var b = 3;
+			 var c = 4;
+			 function test(){
+			 //在方法里定义的变量叫做局部变量
+			 //只有在当前方法里才可以访问局部变量
+			 {var i = 1;
+			 var b = 2;
+			 var c = 5;}
+			 alert(i);
+			 alert(b);
+			 alert(c);
+			 }
+			 test();
+			 alert(b);
+			 alert(c);
+			 */
+
+			var y = 50;
+			function test() {
+				var y = 60;
+				alert(y)
+			}
+
+			test();
+
+		</script>
+	</body>
+</html>

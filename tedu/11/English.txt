@@ -1,0 +1,4 @@
+square     正方形
+perimeter  周长
+area       面积
+length     长度
